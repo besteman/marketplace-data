@@ -20,8 +20,8 @@ class SupabaseConnection:
 
     def __init__(self):
         """Initialize the Supabase connection."""
-        # Don't create client immediately, do it lazily
-        pass
+        if self._client is None:
+            self._client = self._create_client()
 
     def _create_client(self) -> Client:
         """Create and return a Supabase client."""
@@ -30,7 +30,7 @@ class SupabaseConnection:
 
         if not url or not key:
             raise ValueError(
-                "Missing Supabase credentials. Please set SUPABASE_URL and SUPABASE_KEY "
+                "Missing Supabase credentials. Please set SUPABASE_URL and SUPABASE_ANON_KEY "
                 "environment variables in your .env file or system environment."
             )
 
@@ -43,8 +43,8 @@ class SupabaseConnection:
             self._client = self._create_client()
         return self._client
 
-# Singleton instance - don't initialize immediately
-_supabase_connection: Optional[SupabaseConnection] = None
+# Singleton instance
+_supabase_connection = SupabaseConnection()
 
 def get_supabase_client() -> Client:
     """
@@ -61,9 +61,6 @@ def get_supabase_client() -> Client:
         >>> supabase = get_supabase_client()
         >>> result = supabase.table('your_table').select('*').execute()
     """
-    global _supabase_connection
-    if _supabase_connection is None:
-        _supabase_connection = SupabaseConnection()
     return _supabase_connection.client
 
 def test_connection() -> bool:
@@ -75,13 +72,14 @@ def test_connection() -> bool:
     """
     try:
         client = get_supabase_client()
-        # Try a simple table query to test the connection instead of RPC ping
-        result = client.table('marketplace_plans').select('count(*)').limit(1).execute()
+        # Try a simple query to test the connection
+        client.rpc('ping').execute()
         return True
     except Exception as e:
         print(f"Connection test failed: {e}")
         return False
 
+# Convenience function for direct table access
 def get_table(table_name: str):
     """
     Get a table reference for direct querying.
@@ -96,8 +94,5 @@ def get_table(table_name: str):
         >>> from src.utils.db import get_table
         >>> users = get_table('users').select('*').execute()
     """
-    global _supabase_connection
-    if _supabase_connection is None:
-        _supabase_connection = SupabaseConnection()
-    client = _supabase_connection.client
+    client = get_supabase_client()
     return client.table(table_name)
