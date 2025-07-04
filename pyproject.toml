@@ -1,0 +1,13 @@
+[project]
+name = "marketplace-data"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "python-dotenv>=1.1.1",
+    "pydantic>=2.10.0",
+    "ruff>=0.12.2",
+    "supabase>=2.16.0",
+    "datamodel-code-generator>=0.31.2",
+]
