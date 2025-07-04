@@ -4,7 +4,8 @@
 
 from __future__ import annotations
 
-from pydantic import BaseModel, Field
+from typing import List, Optional, Union
+from pydantic import BaseModel, Field, RootModel
 from typing import List, Optional
 
 
@@ -341,13 +342,14 @@ class MarketplacePlanCSV(BaseModel):
     )
     Specialty_Drugs___94_Percent: str = Field(..., alias='Specialty Drugs - 94 Percent')
 
+
 class MarketplacePlanJSON(BaseModel):
     state_code: str
-    fips_county_code: str
+    fips_county_code: int
     county_name: str
     metal_level: str
     issuer_name: str
-    hios_issuer_id: str
+    hios_issuer_id: int
     plan_id_standard_component: str
     plan_marketing_name: str
     standardized_plan_option: str
@@ -357,7 +359,7 @@ class MarketplacePlanJSON(BaseModel):
     source: str
     customer_service_phone_number_local: Optional[str]
     customer_service_phone_number_toll_free: Optional[str]
-    customer_service_phone_number_tty: Optional[str]
+    customer_service_phone_number_tty: Optional[Union[int, str]]
     network_url: str
     plan_brochure_url: Optional[str]
     summary_of_benefits_url: str
@@ -365,131 +367,132 @@ class MarketplacePlanJSON(BaseModel):
     adult_dental: Optional[str]
     child_dental: Optional[str]
     ehb_percent_of_total_premium: str
-    premium_child_age_0_14: str
-    premium_child_age_18: str
-    premium_adult_individual_age_21: str
-    premium_adult_individual_age_27: str
-    premium_adult_individual_age_30: str
-    premium_adult_individual_age_40: str
-    premium_adult_individual_age_50: str
-    premium_adult_individual_age_60: str
-    premium_couple_21: str
-    premium_couple_30: str
-    premium_couple_40: str
-    premium_couple_50: str
-    premium_couple_60: str
-    couple1_child_age_21: str
-    couple1_child_age_30: str
-    couple1_child_age_40: str
-    couple1_child_age_50: str
-    couple2_children_age_21: str
-    couple2_children_age_30: str
-    couple2_children_age_40: str
-    couple2_children_age_50: str
-    couple3_or_more_children_age_21: str
-    couple3_or_more_children_age_30: str
-    couple3_or_more_children_age_40: str
-    couple3_or_more_children_age_50: str
-    individual1_child_age_21: str
-    individual1_child_age_30: str
-    individual1_child_age_40: str
-    individual1_child_age_50: str
-    individual2_children_age_21: str
-    individual2_children_age_30: str
-    individual2_children_age_40: str
-    individual2_children_age_50: str
-    individual3_or_more_children_age_21: str
-    individual3_or_more_children_age_30: str
-    individual3_or_more_children_age_40: str
-    individual3_or_more_children_age_50: str
-    medical_deductible_individual_standard: str
-    drug_deductible_individual_standard: str
-    medical_deductible_family_standard: str
-    drug_deductible_family_standard: str
-    medical_deductible_family_per_person_standard: str
-    drug_deductible_family_per_person_standard: str
-    medical_maximum_out_of_pocket_individual_standard: str
-    drug_maximum_out_of_pocket_individual_standard: str
-    medical_maximum_out_of_pocket_family_standard: str
-    drug_maximum_out_of_pocket_family_standard: str
-    medical_maximum_out_of_pocket_family_per_person_standard: str
-    drug_maximum_out_of_pocket_family_per_person_standard: str
-    primary_care_physician_standard: str
-    specialist_standard: str
-    emergency_room_standard: str
+    premium_child_age_0_14: float
+    premium_child_age_18: float
+    premium_adult_individual_age_21: float
+    premium_adult_individual_age_27: float
+    premium_adult_individual_age_30: float
+    premium_adult_individual_age_40: float
+    premium_adult_individual_age_50: float
+    premium_adult_individual_age_60: float
+    premium_couple_21: float
+    premium_couple_30: float
+    premium_couple_40: float
+    premium_couple_50: float
+    premium_couple_60: float
+    couple_plus_1_child_age_21: float
+    couple_plus_1_child_age_30: float
+    couple_plus_1_child_age_40: float
+    couple_plus_1_child_age_50: float
+    couple_plus_2_children_age_21: float
+    couple_plus_2_children_age_30: float
+    couple_plus_2_children_age_40: float
+    couple_plus_2_children_age_50: float
+    couple_plus_3_or_more_children_age_21: float
+    couple_plus_3_or_more_children_age_30: float
+    couple_plus_3_or_more_children_age_40: float
+    couple_plus_3_or_more_children_age_50: float
+    individual_plus_1_child_age_21: float
+    individual_plus_1_child_age_30: float
+    individual_plus_1_child_age_40: float
+    individual_plus_1_child_age_50: float
+    individual_plus_2_children_age_21: float
+    individual_plus_2_children_age_30: float
+    individual_plus_2_children_age_40: float
+    individual_plus_2_children_age_50: float
+    individual_plus_3_or_more_children_age_21: float
+    individual_plus_3_or_more_children_age_30: float
+    individual_plus_3_or_more_children_age_40: float
+    individual_plus_3_or_more_children_age_50: float
+    medical_deductible_individual_standard: float
+    drug_deductible_individual_standard: Union[float, str]
+    medical_deductible_family_standard: float
+    drug_deductible_family_standard: Union[float, str]
+    medical_deductible_family_per_person_standard: Union[float, str]
+    drug_deductible_family_per_person_standard: Union[float, str]
+    medical_maximum_out_of_pocket_individual_standard: float
+    drug_maximum_out_of_pocket_individual_standard: Union[float, str]
+    medical_maximum_out_of_pocket_family_standard: float
+    drug_maximum_out_of_pocket_family_standard: Union[float, str]
+    medical_maximum_out_of_pocket_family_per_person_standard: float
+    drug_maximum_out_of_pocket_family_per_person_standard: Union[float, str]
+    primary_care_physician_standard: Union[float, str]
+    specialist_standard: Union[float, str]
+    emergency_room_standard: Union[float, str]
     inpatient_facility_standard: str
-    inpatient_physician_standard: str
-    generic_drugs_standard: str
-    preferred_brand_drugs_standard: str
-    non_preferred_brand_drugs_standard: str
-    specialty_drugs_standard: str
+    inpatient_physician_standard: Union[float, str]
+    generic_drugs_standard: Union[float, str]
+    preferred_brand_drugs_standard: Union[float, str]
+    non_preferred_brand_drugs_standard: Union[float, str]
+    specialty_drugs_standard: Union[float, str]
     col_73_percent_actuarial_value_silver_plan_cost_sharing: None
-    medical_deductible_individual_73_percent: Optional[str]
-    drug_deductible_individual_73_percent: Optional[str]
-    medical_deductible_family_73_percent: Optional[str]
-    drug_deductible_family_73_percent: Optional[str]
-    medical_deductible_family_per_person_73_percent: Optional[str]
-    drug_deductible_family_per_person_73_percent: Optional[str]
-    medical_maximum_out_of_pocket_individual_73_percent: Optional[str]
+    medical_deductible_individual_73_percent: Optional[float]
+    drug_deductible_individual_73_percent: Optional[Union[float, str]]
+    medical_deductible_family_73_percent: Optional[float]
+    drug_deductible_family_73_percent: Optional[Union[float, str]]
+    medical_deductible_family_per_person_73_percent: Optional[float]
+    drug_deductible_family_per_person_73_percent: Optional[Union[float, str]]
+    medical_maximum_out_of_pocket_individual_73_percent: Optional[float]
     drug_maximum_out_of_pocket_individual_73_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_73_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_73_percent: Optional[float]
     drug_maximum_out_of_pocket_family_73_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_per_person_73_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_per_person_73_percent: Optional[float]
     drug_maximum_out_of_pocket_family_per_person_73_percent: Optional[str]
-    primary_care_physician_73_percent: Optional[str]
-    specialist_73_percent: Optional[str]
-    emergency_room_73_percent: Optional[str]
+    primary_care_physician_73_percent: Optional[Union[float, str]]
+    specialist_73_percent: Optional[Union[float, str]]
+    emergency_room_73_percent: Optional[Union[float, str]]
     inpatient_facility_73_percent: Optional[str]
-    inpatient_physician_73_percent: Optional[str]
-    generic_drugs_73_percent: Optional[str]
-    preferred_brand_drugs_73_percent: Optional[str]
-    non_preferred_brand_drugs_73_percent: Optional[str]
-    specialty_drugs_73_percent: Optional[str]
+    inpatient_physician_73_percent: Optional[Union[float, str]]
+    generic_drugs_73_percent: Optional[Union[float, str]]
+    preferred_brand_drugs_73_percent: Optional[Union[float, str]]
+    non_preferred_brand_drugs_73_percent: Optional[Union[float, str]]
+    specialty_drugs_73_percent: Optional[Union[float, str]]
     col_87_percent_actuarial_value_silver_plan_cost_sharing: None
-    medical_deductible_individual_87_percent: Optional[str]
-    drug_deductible_individual_87_percent: Optional[str]
-    medical_deductible_family_87_percent: Optional[str]
-    drug_deductible_family_87_percent: Optional[str]
-    medical_deductible_family_per_person_87_percent: Optional[str]
-    drug_deductible_family_per_person_87_percent: Optional[str]
-    medical_maximum_out_of_pocket_individual_87_percent: Optional[str]
+    medical_deductible_individual_87_percent: Optional[float]
+    drug_deductible_individual_87_percent: Optional[Union[float, str]]
+    medical_deductible_family_87_percent: Optional[float]
+    drug_deductible_family_87_percent: Optional[Union[float, str]]
+    medical_deductible_family_per_person_87_percent: Optional[float]
+    drug_deductible_family_per_person_87_percent: Optional[Union[float, str]]
+    medical_maximum_out_of_pocket_individual_87_percent: Optional[float]
     drug_maximum_out_of_pocket_individual_87_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_87_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_87_percent: Optional[float]
     drug_maximum_out_of_pocket_family_87_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_per_person_87_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_per_person_87_percent: Optional[float]
     drug_maximum_out_of_pocket_family_per_person_87_percent: Optional[str]
-    primary_care_physician_87_percent: Optional[str]
-    specialist_87_percent: Optional[str]
-    emergency_room_87_percent: Optional[str]
+    primary_care_physician_87_percent: Optional[Union[float, str]]
+    specialist_87_percent: Optional[Union[float, str]]
+    emergency_room_87_percent: Optional[Union[float, str]]
     inpatient_facility_87_percent: Optional[str]
-    inpatient_physician_87_percent: Optional[str]
-    generic_drugs_87_percent: Optional[str]
-    preferred_brand_drugs_87_percent: Optional[str]
-    non_preferred_brand_drugs_87_percent: Optional[str]
-    specialty_drugs_87_percent: Optional[str]
+    inpatient_physician_87_percent: Optional[Union[float, str]]
+    generic_drugs_87_percent: Optional[Union[float, str]]
+    preferred_brand_drugs_87_percent: Optional[Union[float, str]]
+    non_preferred_brand_drugs_87_percent: Optional[Union[float, str]]
+    specialty_drugs_87_percent: Optional[Union[float, str]]
     col_94_percent_actuarial_value_silver_plan_cost_sharing: None
-    medical_deductible_individual_94_percent: Optional[str]
-    drug_deductible_individual_94_percent: Optional[str]
-    medical_deductible_family_94_percent: Optional[str]
-    drug_deductible_family_94_percent: Optional[str]
-    medical_deductible_family_per_person_94_percent: Optional[str]
-    drug_deductible_family_per_person_94_percent: Optional[str]
-    medical_maximum_out_of_pocket_individual_94_percent: Optional[str]
+    medical_deductible_individual_94_percent: Optional[float]
+    drug_deductible_individual_94_percent: Optional[Union[float, str]]
+    medical_deductible_family_94_percent: Optional[float]
+    drug_deductible_family_94_percent: Optional[Union[float, str]]
+    medical_deductible_family_per_person_94_percent: Optional[float]
+    drug_deductible_family_per_person_94_percent: Optional[Union[float, str]]
+    medical_maximum_out_of_pocket_individual_94_percent: Optional[float]
     drug_maximum_out_of_pocket_individual_94_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_94_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_94_percent: Optional[float]
     drug_maximum_out_of_pocket_family_94_percent: Optional[str]
-    medical_maximum_out_of_pocket_family_per_person_94_percent: Optional[str]
+    medical_maximum_out_of_pocket_family_per_person_94_percent: Optional[float]
     drug_maximum_out_of_pocket_family_per_person_94_percent: Optional[str]
-    primary_care_physician_94_percent: Optional[str]
-    specialist_94_percent: Optional[str]
-    emergency_room_94_percent: Optional[str]
+    primary_care_physician_94_percent: Optional[Union[float, str]]
+    specialist_94_percent: Optional[Union[float, str]]
+    emergency_room_94_percent: Optional[Union[float, str]]
     inpatient_facility_94_percent: Optional[str]
-    inpatient_physician_94_percent: Optional[str]
-    generic_drugs_94_percent: Optional[str]
-    preferred_brand_drugs_94_percent: Optional[str]
-    non_preferred_brand_drugs_94_percent: Optional[str]
-    specialty_drugs_94_percent: Optional[str]
+    inpatient_physician_94_percent: Optional[Union[float, str]]
+    generic_drugs_94_percent: Optional[Union[float, str]]
+    preferred_brand_drugs_94_percent: Optional[Union[float, str]]
+    non_preferred_brand_drugs_94_percent: Optional[Union[float, str]]
+    specialty_drugs_94_percent: Optional[Union[float, str]]
 
 
-class Model(BaseModel):
-    __root__: List[MarketplacePlanJSON]
+
+class Model(RootModel[List[MarketplacePlanJSON]]):
+    root: List[MarketplacePlanJSON]
