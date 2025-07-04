@@ -220,8 +220,8 @@ def main():
     print("🚀 Starting CSV to JSON conversion with transformations...")
 
     # Configuration
-    csv_file_path = "/Users/besteman/code/marketplace-data/src/data/marketplace_plans.csv"
-    output_dir = "/Users/besteman/code/marketplace-data/src/data"
+    csv_file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'marketplace_plans.csv')
+    output_dir = os.path.join(os.path.dirname(__file__), '..', 'data')
 
     # Output file paths
     json_output_path = os.path.join(output_dir, "marketplace_plans.json")
