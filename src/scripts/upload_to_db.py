@@ -78,23 +78,16 @@ def prepare_record_for_db(validated_record: MarketplacePlanJSON) -> Dict[str, An
     return record_dict
 
 
-def upload_records_to_supabase(records: List[Dict[str, Any]], batch_size: int = 50, start_from_batch: int = 1) -> bool:
+def upload_records_to_supabase(records: List[Dict[str, Any]], batch_size: int = 50) -> bool:
     """Upload records to Supabase in batches."""
     try:
         supabase = get_supabase_client()
         total_records = len(records)
 
-        # Calculate starting position
-        start_index = (start_from_batch - 1) * batch_size
-        if start_index >= total_records:
-            print(f"⚠️ Start batch {start_from_batch} is beyond available records. No upload needed.")
-            return True
+        print(f"🚀 Starting upload of {total_records} records in batches of {batch_size}...")
 
-        remaining_records = total_records - start_index
-        print(f"🚀 Resuming upload from batch {start_from_batch} ({remaining_records} remaining records in batches of {batch_size})...")
-
-        # Upload in batches starting from the specified position
-        for i in range(start_index, total_records, batch_size):
+        # Upload in batches starting from the beginning
+        for i in range(0, total_records, batch_size):
             batch = records[i:i + batch_size]
             batch_num = (i // batch_size) + 1
             total_batches = (total_records + batch_size - 1) // batch_size
@@ -121,7 +114,7 @@ def upload_records_to_supabase(records: List[Dict[str, Any]], batch_size: int = 
 
                 return False
 
-        print("🎉 Successfully uploaded all remaining records!")
+        print("🎉 Successfully uploaded all records!")
         return True
 
     except Exception as e:
@@ -137,7 +130,6 @@ def main():
     json_file_path = os.path.join(os.path.dirname(__file__), '..', 'data', 'marketplace_plans.json')
     test_limit = None  # Full upload - all records
     batch_size = 100   # Increased batch size for better performance
-    start_from_batch = 74  # Resume from batch 74 (around where we failed)
 
     # Step 1: Test database connection
     print("🔗 Testing database connection...")
@@ -200,7 +192,7 @@ def main():
         print("  ...")
 
     # Step 6: Upload to Supabase
-    success = upload_records_to_supabase(db_records, batch_size, start_from_batch)
+    success = upload_records_to_supabase(db_records, batch_size)
 
     if success:
         print("\n🎉 Upload completed successfully!")
@@ -209,7 +201,6 @@ def main():
         print(f"   • Successfully validated: {len(validated_records)}")
         print(f"   • Successfully uploaded: {len(db_records)}")
         print(f"   • Validation errors: {validation_errors}")
-        print(f"   • Started from batch: {start_from_batch}")
     else:
         print("\n❌ Upload failed. Please check the error messages above.")
 
