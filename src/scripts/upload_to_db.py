@@ -121,7 +121,7 @@ def upload_records_to_supabase(records: List[Dict[str, Any]], batch_size: int = 
 
                 return False
 
-        print(f"🎉 Successfully uploaded all remaining records!")
+        print("🎉 Successfully uploaded all remaining records!")
         return True
 
     except Exception as e:
@@ -203,15 +203,15 @@ def main():
     success = upload_records_to_supabase(db_records, batch_size, start_from_batch)
 
     if success:
-        print(f"\n🎉 Upload completed successfully!")
-        print(f"📊 Summary:")
+        print("\n🎉 Upload completed successfully!")
+        print("📊 Summary:")
         print(f"   • Total records loaded: {len(json_data)}")
         print(f"   • Successfully validated: {len(validated_records)}")
         print(f"   • Successfully uploaded: {len(db_records)}")
         print(f"   • Validation errors: {validation_errors}")
         print(f"   • Started from batch: {start_from_batch}")
     else:
-        print(f"\n❌ Upload failed. Please check the error messages above.")
+        print("\n❌ Upload failed. Please check the error messages above.")
 
 
 if __name__ == "__main__":
