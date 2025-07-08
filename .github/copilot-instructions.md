@@ -4,4 +4,6 @@ Codebase is using Pydantic for data validation and type annotations, and it incl
 
 Codebase is using Supabase for database operations, and it includes a `.env` file for configuration. The code is structured to allow easy extension and modification, with clear separation of concerns between data models, database operations, and CSV parsing logic.
 
-Codebase is using uv package manager for dependency management. Use this for installing dependencies and running the code.
+Codebase is using uv package manager for dependency management. Use this for installing dependencies and running the code. Use it to run pytest.
+
+Codebase is using pytest for testing. Use pytest to run the tests and ensure the code is functioning as expected. All tests are located in the `srctests` directory, and they cover various aspects of the codebase, including CSV parsing, model validation, and database operations.
